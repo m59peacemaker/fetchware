@@ -1,10 +1,11 @@
-var test = require('tape')
-var jsonServer = require('jsonplaceholder/src/app')
+require('reify')
+const test = require('tape')
+const jsonServer = require('jsonplaceholder/src/app')
 
-var PORT = 3000
-var URL = `http://localhost:${PORT}/`
+const PORT = 3000
+const URL = `http://localhost:${PORT}/`
 
-var server = jsonServer.listen(PORT, () => {
+const server = jsonServer.listen(PORT, () => {
   console.log(`JSONPlaceholder listening on ${URL}`)
   require('./tests')
 })

@@ -1,37 +1,33 @@
-const test = require('tape')
-const { Request } = require('node-fetch')
-const fetchware = require('../')
-const { URL } = require('./index.test')
+import test from 'tape'
+import { Request } from 'node-fetch'
+import fetchware from '../'
+import { URL } from './index.test'
 
-function append (v) {
-  return function (request, next) {
+const append = v =>
+  (request, next) => {
     request.url = request.url + v
     return next(request)
   }
-}
 
-function type (t) {
-  return function (request, next) {
-    return next(request).then(result => result.response[t]())
-  }
-}
+const type = (t) =>
+  (request, next) => next(request)
+    .then(response => response[t]())
 
-function reqSet (prop, v) {
-  return function (request, next) {
+const reqSet = (prop, v) =>
+  (request, next) => {
     request.init[prop] = v
     return next(request)
   }
-}
 
-test('middleware modifies request', function (t) {
-  t.test('string url and init object', function (t) {
+test('middleware modifies request', t => {
+  t.test('string url and init object', t => {
     t.plan(2)
 
     fetchware
       .use(append('/1'))
       (URL + 'posts')
-      .then(function (result) { return result.response.json() })
-      .then(function (body) { t.equal(body.id, 1, 'modified the url') })
+      .then(response => response.json())
+      .then(body => t.equal(body.id, 1, 'modified the url'))
 
     fetchware
       .use(append('posts'))
@@ -41,18 +37,18 @@ test('middleware modifies request', function (t) {
       })))
       // content type header required for jsonplaceholder server to reply like we want
       (URL, { headers: { 'Content-Type': 'application/json' } })
-      .then(function (result) { return result.response.json() })
-      .then(function (body) { t.equal(body.title, 'hey') })
+      .then(response => response.json())
+      .then(body => t.equal(body.title, 'hey'))
   })
 
-  t.test('Request object', function (t) {
+  t.test('Request object', t => {
     t.plan(2)
 
     fetchware
       .use(append('/1'))
       (new Request(URL + 'posts'))
-      .then(function (result) { return result.response.json() })
-      .then(function (body) { t.equal(body.id, 1, 'modified the url') })
+      .then(response => response.json())
+      .then(body => t.equal(body.id, 1, 'modified the url'))
 
     fetchware
       .use(append('posts'))
@@ -61,12 +57,12 @@ test('middleware modifies request', function (t) {
         title: 'hey'
       })))
       (new Request(URL), { headers: { 'Content-Type': 'application/json' } })
-      .then(function (result) { return result.response.json() })
-      .then(function (body) { t.equal(body.title, 'hey') })
+      .then(response => response.json())
+      .then(body => t.equal(body.title, 'hey'))
   })
 })
 
-test('middleware modifies response', function (t) {
+test('middleware modifies response', t => {
   t.plan(1)
 
   fetchware
@@ -75,21 +71,21 @@ test('middleware modifies response', function (t) {
     .then(body => t.equal(body.id, 1))
 })
 
-test('middleware modifies request and response', function (t) {
+test('middleware modifies request and response', t => {
   t.plan(1)
 
   fetchware
-    .use(function (request, next) {
+    .use((request, next) => {
       request.init.method = {}
       request.url = request.url + 'posts/1'
       return next(request)
-        .then(function (result) { return result.id })
+        .then(response => response.id)
     })
-    .use(function (request, next) {
+    .use((request, next) => {
       request.init.method = 'GET'
       return next(request)
-        .then(function (result) { return result.response.json() })
+        .then(response => response.json())
     })
     (new Request(URL), { method: 'POST' })
-    .then(function (id) { t.equal(id, 1) })
+    .then(id => t.equal(id, 1))
 })
