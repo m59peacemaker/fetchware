@@ -1,7 +1,7 @@
-var test = require('tape')
-var { Request } = require('node-fetch')
-var fetchware = require('../')
-var { URL } = require('./index.test')
+const test = require('tape')
+const { Request } = require('node-fetch')
+const fetchware = require('../')
+const { URL } = require('./index.test')
 
 function append (v) {
   return function (request, next) {
