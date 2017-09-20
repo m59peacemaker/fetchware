@@ -10,7 +10,8 @@
   "author": "Johnny Hauser <johnnyhauser@gmail.com>",
   "license": "CC0-1.0",
   "dependencies": {
-    "node-fetch": "^2.0.0-alpha.8"
+    "compose-middleware": "https://github.com/m59peacemaker/compose-middleware#0acb71e38ce4562a99c00e2a69452c34ced53b20",
+    "node-fetch": "git+https://github.com/m59peacemaker/node-fetch.git#build"
   },
   "devDependencies": {
     "jsonplaceholder": "^0.3.3",

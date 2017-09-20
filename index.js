@@ -1,4 +1,4 @@
-var compose = require('../compose-middleware')
+var compose = require('compose-middleware')
 var fetch = require('node-fetch')
 var requestToObject = require('./lib/request-to-object')
 var fetchMiddleware = require('./lib/fetch-middleware')
