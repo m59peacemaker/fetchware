@@ -1,0 +1,19 @@
+{
+  "name": "fetchware",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "keywords": [],
+  "scripts": {
+    "test": "tape test/*.test.js"
+  },
+  "author": "Johnny Hauser <johnnyhauser@gmail.com>",
+  "license": "CC0-1.0",
+  "dependencies": {
+    "node-fetch": "^2.0.0-alpha.8"
+  },
+  "devDependencies": {
+    "jsonplaceholder": "^0.3.3",
+    "tape": "^4.6.3"
+  }
+}
