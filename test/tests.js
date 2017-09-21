@@ -1,6 +1,6 @@
 import test from 'tape'
 import { Request } from 'node-fetch'
-import fetchware from '../'
+import fetchware from '../src'
 import { URL } from './index.test'
 
 const append = v =>
