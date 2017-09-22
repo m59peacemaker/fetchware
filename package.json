@@ -30,6 +30,7 @@
     "node-fetch": "git+https://github.com/m59peacemaker/node-fetch.git#build"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.0",
     "jsonplaceholder": "^0.3.3",
     "reify": "^0.12.3",
